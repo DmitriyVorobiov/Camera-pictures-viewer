@@ -5,21 +5,17 @@
 
 package com.example.camerapicturesviewer;
 
-import java.io.File;
-
-import org.androidannotations.api.builder.ActivityIntentBuilder;
-import org.androidannotations.api.view.HasViews;
-import org.androidannotations.api.view.OnViewChangedListener;
-import org.androidannotations.api.view.OnViewChangedNotifier;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-
+import com.example.camerapicturesviewer.R.id;
 import com.example.camerapicturesviewer.R.layout;
-import com.jess.ui.TwoWayAdapterView;
 import com.jess.ui.TwoWayGridView;
+import org.androidannotations.api.builder.ActivityIntentBuilder;
+import org.androidannotations.api.view.HasViews;
+import org.androidannotations.api.view.OnViewChangedListener;
+import org.androidannotations.api.view.OnViewChangedNotifier;
 
 public final class MainActivity_
     extends MainActivity
@@ -73,19 +69,7 @@ public final class MainActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        picturesGridView = ((TwoWayGridView) hasViews.findViewById(com.example.camerapicturesviewer.R.id.gridView));
-        if (picturesGridView!= null) {
-            picturesGridView.setOnItemClickListener(new TwoWayAdapterView.OnItemClickListener() {
-
-
-                @Override
-                public void onItemClick(TwoWayAdapterView<?> parent, View view, int position, long id) {
-                    MainActivity_.this.gridViewItemClicked(((File) parent.getAdapter().getItem(position)));
-                }
-
-            }
-            );
-        }
+        picturesGridView = ((TwoWayGridView) hasViews.findViewById(id.gridView));
         initComponents();
     }
 

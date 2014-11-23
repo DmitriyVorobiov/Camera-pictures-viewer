@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 
 import android.app.Activity;
@@ -13,11 +12,13 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Environment;
+import android.view.View;
 
+import com.jess.ui.TwoWayAdapterView;
 import com.jess.ui.TwoWayGridView;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements TwoWayAdapterView.OnItemClickListener {
 
 	private static final String DATA_TYPE = "image/*";
 	private static final String JPG_ENDING = ".jpg";
@@ -28,15 +29,11 @@ public class MainActivity extends Activity {
 	@ViewById(R.id.gridView)
 	protected TwoWayGridView picturesGridView;
 
-	@ItemClick
-	public void gridViewItemClicked(File selectedFile) {
-		openFile(selectedFile);
-	}
-
 	@AfterViews
 	protected void initComponents() {
 		picturesGridView.setAdapter(new ImageAdapter(this, getFilelist()));
 		picturesGridView.setNumRows(getNumRows());
+		picturesGridView.setOnItemClickListener(this);
 	}
 
 	private ArrayList<File> getFilelist() {
@@ -65,5 +62,10 @@ public class MainActivity extends Activity {
 			return PORTRAIT_ORIENTATION_ROW_COUNT;
 		}
 
+	}
+
+	@Override
+	public void onItemClick(TwoWayAdapterView<?> parent, View view, int position, long id) {
+		openFile(((File) picturesGridView.getAdapter().getItem(position)));
 	}
 }
