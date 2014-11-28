@@ -22,7 +22,7 @@ public class MainActivity extends Activity implements TwoWayAdapterView.OnItemCl
 
 	private static final String DATA_TYPE = "image/*";
 	private static final String JPG_ENDING = ".jpg";
-	private static final String CAMERA_FOLDER = "/camera";
+	private static final String CAMERA_FOLDER = "Camera";
 	private static final int PORTRAIT_ORIENTATION_ROW_COUNT = 4;
 	private static final int LANDSCAPE_ORIENTATION_ROW_COUNT = 2;
 
@@ -37,11 +37,19 @@ public class MainActivity extends Activity implements TwoWayAdapterView.OnItemCl
 	}
 
 	private ArrayList<File> getFilelist() {
-		File[] fullFileList = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM.concat(CAMERA_FOLDER)).listFiles();
+		File[] DCIMfileList = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).listFiles();
+		File[] cameraFolder = null;
 		ArrayList<File> goalFileList = new ArrayList<File>();
-		for (File file : fullFileList) {
-			if (file.getName().endsWith(JPG_ENDING)) {
-				goalFileList.add(file);
+		for (File file : DCIMfileList) {
+			if (file.getName().equals(CAMERA_FOLDER)) {
+				cameraFolder = file.listFiles();
+			}
+		}
+		if (cameraFolder != null) {
+			for (File file : cameraFolder) {
+				if (file.getName().endsWith(JPG_ENDING)) {
+					goalFileList.add(file);
+				}
 			}
 		}
 		return goalFileList;
